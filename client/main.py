@@ -1,5 +1,5 @@
 import pygame
-from Menu.MainScreen import *
+from Menu.MainScreen import MainScreen
 
 def main():
     pygame.init()

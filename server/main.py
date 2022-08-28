@@ -1,5 +1,5 @@
 import socket			
-
+from DataHandler import MessageSort
 
 s = socket.socket()		
 print ("Socket successfully created")
@@ -14,6 +14,7 @@ while True:
 
     c, addr = s.accept()	
     print ('Got connection from', addr )
-    c.send('Thank you for connecting'.encode())
+    message = c.recv(1024).decode()
+    MessageSort(message)
+    c.send('OK'.encode())
     c.close()
-    break

@@ -1,15 +1,19 @@
+from pickle import FALSE, TRUE
 import pygame
 import sys
-sys.path.append('/Menu/')
-from DataHandler import EnterQueue
+from Menu.DataHandler import *
 
 def MainScreen(screen):
+    #bools
+    Username_Check = FALSE
+
     #colors
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
     GREEN = (0, 255, 0)
     color_active = pygame.Color('lightskyblue3')
     color = RED
+    Join_Color = RED
 
     # basic font for user typed
     base_font = pygame.font.Font(None, 32)
@@ -36,7 +40,7 @@ def MainScreen(screen):
                 else:
                     active = False
 
-                if Join_rect.collidepoint(event.pos):
+                if Join_rect.collidepoint(event.pos) and Username_Check == TRUE:
                     EnterQueue()
   
             if event.type == pygame.KEYDOWN:
@@ -52,18 +56,24 @@ def MainScreen(screen):
         screen.blit(Username_label, (10, 100))
         if active:
             color = color_active
+            Username_Check = FALSE
         elif len(user_text) < 3 or len(user_text) > 12:
             color = RED
+            Join_Color = RED
             screen.blit(Username_err_label, (10, 150))
+            Username_Check = FALSE
         else: 
-            pygame.draw.rect(screen, GREEN, Join_rect)
-            text_surface = font_arial_18.render("Join", True, (255, 255, 255))
-            screen.blit(text_surface, (10, 300))
+            Join_Color = GREEN
+            Username_Check = TRUE
           
         pygame.draw.rect(screen, color, input_rect)
         text_surface = base_font.render(user_text, True, (255, 255, 255))
         screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
         input_rect.w = max(100, text_surface.get_width()+10)
+
+        pygame.draw.rect(screen, Join_Color, Join_rect)
+        text_surface = font_arial_18.render("Join", True, (255, 255, 255))
+        screen.blit(text_surface, (10, 300))
 
 #update call
         pygame.display.flip()
