@@ -1,0 +1,4 @@
+Commands run for queue databse:
+
+CREATE TABLE IF NOT EXISTS UserQueue
+          ([UserAddr] TEXT)

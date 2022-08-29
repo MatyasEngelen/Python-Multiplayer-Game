@@ -1,3 +1,4 @@
+from audioop import add
 import sqlite3
 
 def MessageSort(Message):
@@ -7,7 +8,13 @@ def MessageSort(Message):
         case _:
             print("Err message sort, invalid data")
 
-def JoinQueue():
+def JoinQueue(addr):
     #where to store database
     con = sqlite3.connect('C:\coding\gamefr\Python-Multiplayer-Game\Database\queue.db')
-    
+    c = con.cursor()
+                   
+    c.execute('''
+          INSERT INTO UserQueue (UserAddr)
+                VALUES
+                ({})
+          '''.format(addr))
